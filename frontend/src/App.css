@@ -1,0 +1,14 @@
+/* COLOR PALETTE */
+:root {
+  --vidify-green: #BFE277;
+  --vidify-dark-green: #222823;
+  --vidify-black: #08090A;
+  --vidify-gray: #A7A2A9;
+  --vidify-dark-gray: #575A5E;
+}
+
+
+body {
+  margin: 0;
+  background-color: var(--vidify-black);
+}
