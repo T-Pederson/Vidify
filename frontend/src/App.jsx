@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import LandingPage from "./pages/LandingPage";
-import PlaylistPage from "./pages/PlaylistPage";
+import PlaylistsPage from "./pages/PlaylistsPage";
 import "./App.css";
+import PlayerPage from "./pages/PlayerPage";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Routes>
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<LandingPage />} />
-        <Route path="/playlists" element={<PlaylistPage />} />
+        <Route path="/playlists" element={<PlaylistsPage />} />
+        <Route path="/player" element={<PlayerPage />} />
       </Routes>
     </>
   );

@@ -65,11 +65,16 @@ table {
 body {
   background-color: var(--vidify-black);
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: var(--vidify-gray);
 }
 
 h1 {
-  color: var(--vidify-gray);
   font-size: 3em;
+}
+
+iframe {
+  height: 630px;
+  width: 1120px;
 }
 
 /* Classes */
@@ -125,4 +130,131 @@ h1 {
 
 .landingPage button:active {
   transform: scale(0.95);
+}
+
+.errorPage {
+  text-align: center;
+  margin-top: 10em;
+}
+
+.playlistsPage {
+  display: flex;
+  flex-direction: column;
+  gap: 4em;
+  text-align: center;
+  margin-top: 4em;
+  margin-bottom: 4em;
+  align-items: center;
+}
+
+.playlistsContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 3em 8em;
+  align-items: center;
+}
+
+.playlistTile {
+  text-align: center;
+  font-size: 1.5em;
+  transition: transform 0.2s ease-in-out;
+}
+
+.playlistTile:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.playlistTile img {
+  max-height: 8em;
+  border-radius: 4px;
+}
+
+.cornerLogo {
+  position: absolute;
+  top: 2em;
+  left: 6em;
+  height: 6em;
+}
+
+.changeLink {
+  position: absolute;
+  top: 4em;
+  right: 6em;
+  font-size: 1.2em;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.playerPage {
+  display: flex;
+  gap: 2em;
+  align-items: center;
+  min-height: 100vh;
+  margin-left: 4em;
+}
+
+.songsList {
+  display: flex;
+  flex-direction: column;
+  width: 20em;
+  padding: 1em;
+  height: calc(630px - 2em);
+  background-color: var(--vidify-dark-green);
+  border-radius: 4px;
+  overflow-y: auto;
+}
+
+.songsList::-webkit-scrollbar {
+  width: 10px;  /* Set the width of the vertical scrollbar */
+  height: 10px; /* Set the height of the horizontal scrollbar */
+}
+
+/* Customize the scrollbar track (the area the scrollbar moves in) */
+.songsList::-webkit-scrollbar-track {
+  background: transparent; /* Optional: set background of track */
+}
+
+/* Customize the scrollbar thumb (the draggable part of the scrollbar) */
+.songsList::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.35); /* Semi-transparent black */
+}
+
+/* Optional: When you hover over the scrollbar, change its appearance */
+.songsList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5); /* Darker when hovered */
+}
+
+.songsListHeader div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1em 0 1em;
+  font-size: 1.1em;
+}
+
+.songsListSong {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.songsListSong:hover {
+  background-color: rgba(167, 162, 169, 0.2);
+}
+
+.songSelected {
+  background-color: rgba(167, 162, 169, 0.2);
+}
+
+.songTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 14em;
+  color: var(--vidify-green);
+  font-size: 1.1em;
 }

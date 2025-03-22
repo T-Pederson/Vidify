@@ -1,13 +1,18 @@
+import { useEffect, useState } from "react";
 import logo from "../assets/vidify-logo.svg";
 import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-  // call this in useEffect?
-  if (localStorage.getItem("username")) {
-    navigate("/playlists");
-  }
+  useEffect(() => {
+    if (localStorage.getItem("currentUser")) {
+      navigate("/playlists");
+    } else {
+      setLoading(false);
+    }
+  }, [navigate]);
 
   function submitUsername(e) {
     e.preventDefault();
@@ -24,6 +29,10 @@ export default function LandingPage() {
 
     localStorage.setItem("currentUser", e.target.elements.username.value);
     navigate("/playlists");
+  }
+
+  if (loading) {
+    return null;
   }
 
   return (
