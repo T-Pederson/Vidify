@@ -20,12 +20,6 @@ export default function LandingPage() {
     if (e.target.elements.username.value.length === 0) {
       return;
     }
-    // check if playlists are returned when calling spotify api with given username (call to backend)
-    // if valid
-    // store username in local storage
-    // get playlist page
-    // else
-    // display error to user stating no playlists found for user along with a tip on how to find their spotify username
 
     localStorage.setItem("currentUser", e.target.elements.username.value);
     navigate("/playlists");
