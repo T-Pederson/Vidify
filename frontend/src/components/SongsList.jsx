@@ -1,4 +1,5 @@
 import SongsListSong from "./SongsListSong";
+import songsData from "../pages/songs.json";
 
 export default function SongsList({ playlistData }) {
   return (
@@ -10,21 +11,9 @@ export default function SongsList({ playlistData }) {
         </div>
         <hr />
       </div>
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
-      <SongsListSong />
+      {songsData.items.map((song) => (
+        <SongsListSong songData={song} />
+      ))}
     </div>
   );
 }

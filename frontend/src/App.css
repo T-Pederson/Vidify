@@ -258,3 +258,10 @@ iframe {
   color: var(--vidify-green);
   font-size: 1.1em;
 }
+
+.songArtist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 14em;
+}
