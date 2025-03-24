@@ -1,7 +1,6 @@
 import SongsListSong from "./SongsListSong";
-import songsData from "../pages/songs.json";
 
-export default function SongsList({ playlistData }) {
+export default function SongsList({ songs }) {
   return (
     <div className="songsList">
       <div className="songsListHeader">
@@ -11,7 +10,7 @@ export default function SongsList({ playlistData }) {
         </div>
         <hr />
       </div>
-      {songsData.items.map((song) => (
+      {songs.map((song) => (
         <SongsListSong songData={song} />
       ))}
     </div>

@@ -1,4 +1,4 @@
-const {getSpotifyToken} = require("../utils/spotifyTokenUtil");
+const { getSpotifyToken } = require("../utils/spotifyTokenUtil");
 
 async function getUserPlaylists(req, res, next) {
   try {
@@ -15,8 +15,6 @@ async function getUserPlaylists(req, res, next) {
       }
     );
     const json = await response.json();
-
-    // console.log(json);
 
     for (const item of json.items) {
       playlistsData.playlists.push({
