@@ -1,6 +1,6 @@
 import SongsListSong from "./SongsListSong";
 
-export default function SongsList({ songs }) {
+export default function SongsList({ songs, selectSong, currentSongId }) {
   return (
     <div className="songsList">
       <div className="songsListHeader">
@@ -11,7 +11,7 @@ export default function SongsList({ songs }) {
         <hr />
       </div>
       {songs.map((song) => (
-        <SongsListSong songData={song} />
+        <SongsListSong key={song.id} songData={song} selectSong={selectSong} currentSongId={currentSongId}/>
       ))}
     </div>
   );

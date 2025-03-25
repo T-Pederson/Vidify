@@ -18,7 +18,8 @@ async function getPlaylistSongs(req, res, next) {
 
       for (const song of json.items) {
         songsData.songs.push({
-          name: song.track.name,
+          id: song.track.id,
+          title: song.track.name,
           artist: song.track.artists[0].name,
           duration: formatMs(song.track.duration_ms),
         });
