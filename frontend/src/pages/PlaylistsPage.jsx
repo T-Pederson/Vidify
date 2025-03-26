@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import logo from "../assets/vidify-logo.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import PlaylistTile from "../components/PlaylistTile";
 
 export default function PlaylistsPage() {
@@ -34,26 +34,18 @@ export default function PlaylistsPage() {
   }, [navigate, currentUser]);
 
   if (loading) {
-    return null;
-  }
-
-  function changeUser() {
-    localStorage.clear();
-    navigate("/");
-  }
-
-  function selectPlaylist(id) {
-    navigate(`/player?playlist=${id}`);
+    return <p className="loading">Loading...</p>;
   }
 
   return (
     <div className="playlistsPage">
-      <img className="cornerLogo" src={logo} alt="Vidify logo" />
-      <h1>Select a playlist, {currentUser}</h1>
-      <p className="changeLink" onClick={changeUser}>
-        Change user
-      </p>
-
+      <header>
+        <img className="cornerLogo" src={logo} alt="Vidify logo" />
+        <h1>Select a playlist, {currentUser}</h1>
+        <Link onClick={() => localStorage.clear()} to="/">
+          Change user
+        </Link>
+      </header>
       <div className="playlistsContainer">
         {playlists.length > 0 ? (
           playlists
@@ -65,7 +57,7 @@ export default function PlaylistsPage() {
                 id={playlist.id}
                 name={playlist.name}
                 art={playlist.image}
-                handleClick={selectPlaylist}
+                handleClick={() => navigate(`/player?playlist=${playlist.id}`)}
               />
             ))
         ) : (

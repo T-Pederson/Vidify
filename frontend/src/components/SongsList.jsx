@@ -11,7 +11,12 @@ export default function SongsList({ songs, selectSong, currentSongId }) {
         <hr />
       </div>
       {songs.map((song) => (
-        <SongsListSong key={song.id} songData={song} selectSong={selectSong} currentSongId={currentSongId}/>
+        <SongsListSong
+          key={song.id}
+          songData={song}
+          selectSong={selectSong}
+          currentSongId={currentSongId}
+        />
       ))}
     </div>
   );

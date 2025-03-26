@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import logo from "../assets/vidify-logo.svg";
 import YouTubeVideo from "../components/YouTubeVideo";
 import SongsList from "../components/SongsList";
-// import songsData from "./songs.json";
 
 export default function PlayerPage() {
-  const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const playlistId = queryParams.get("playlist");
@@ -14,9 +12,9 @@ export default function PlayerPage() {
   const [currentSongId, setCurrentSongId] = useState(null);
   const [videoId, setVideoId] = useState(null);
   const [videoEnded, setVideoEnded] = useState(true);
-  // const [songs, setSongs] = useState(songsData.songs);
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingVideo, setLoadingVideo] = useState(true);
 
   useEffect(() => {
     console.log("fetching songs");
@@ -45,7 +43,7 @@ export default function PlayerPage() {
 
   useEffect(() => {
     if (videoEnded && songs.length > 0 && currentSongId !== null) {
-      console.log("fetching video")
+      console.log("fetching video");
       const songsDetails = getSongDetails(currentSongId);
 
       if (!songsDetails) return;
@@ -65,6 +63,7 @@ export default function PlayerPage() {
         .then((res) => {
           setVideoId(res.videoId);
           setVideoEnded(false);
+          setLoadingVideo(false);
         })
         .catch((e) => {
           console.log(e);
@@ -73,16 +72,12 @@ export default function PlayerPage() {
   }, [videoEnded, songs, currentSongId]);
 
   if (loading) {
-    return null;
-  }
-
-  function changePlaylist() {
-    navigate("/playlists");
+    return <p className="loading">Loading...</p>;
   }
 
   function getSongDetails(id) {
     if (!id) return null;
-    const song = songs.find(song => song.id === id);
+    const song = songs.find((song) => song.id === id);
     return {
       title: song.title,
       artist: song.artist,
@@ -92,16 +87,57 @@ export default function PlayerPage() {
   function selectSong(e) {
     setCurrentSongId(e.currentTarget.id);
     setVideoEnded(true);
+    setLoadingVideo(true);
+  }
+
+  function shuffleRemainingSongs() {
+    let currentSongIndex = songs.findIndex((song) => song.id === currentSongId);
+
+    if (currentSongIndex === songs.length - 1) {
+      return;
+    }
+
+    let playedSongs = songs.slice(0, currentSongIndex + 1);
+    let remainingSongs = songs.slice(currentSongIndex + 1);
+
+    for (let i = remainingSongs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [remainingSongs[i], remainingSongs[j]] = [
+        remainingSongs[j],
+        remainingSongs[i],
+      ];
+    }
+    setSongs(playedSongs.concat(remainingSongs));
   }
 
   return (
     <div className="playerPage">
-      <img className="cornerLogo" src={logo} alt="Vidify logo" />
-      <p className="changeLink" onClick={changePlaylist}>
-        Change playlist
+      <header>
+        <img className="cornerLogo" src={logo} alt="Vidify logo" />
+        <Link to="/playlists">Change playlist</Link>
+      </header>
+      <div className="songListPlayerContainer">
+        <SongsList
+          songs={songs}
+          selectSong={selectSong}
+          currentSongId={currentSongId}
+        />
+        {loadingVideo ? (
+          <p className="loadingVideo">Loading Video...</p>
+        ) : (
+          <YouTubeVideo
+            videoId={videoId}
+            setVideoEnded={setVideoEnded}
+            songs={songs}
+            currentSongId={currentSongId}
+            setCurrentSongId={setCurrentSongId}
+            setLoadingVideo={setLoadingVideo}
+          />
+        )}
+      </div>
+      <p className="underlineClickable" onClick={shuffleRemainingSongs}>
+        Shuffle
       </p>
-      <SongsList songs={songs} selectSong={selectSong} currentSongId={currentSongId}/>
-      <YouTubeVideo videoId={videoId} setVideoEnded={setVideoEnded} />
     </div>
   );
 }
