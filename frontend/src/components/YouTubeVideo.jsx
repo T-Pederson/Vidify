@@ -22,37 +22,36 @@ export default function YouTubeVideo({
       script.src = "https://www.youtube.com/iframe_api";
       document.body.appendChild(script);
 
-      // Wait for the API to be ready
-      window.onYouTubeIframeAPIReady = createPlayer;
+      // Define the function globally for YouTube API callback
+      window.onYouTubeIframeAPIReady = initializePlayer;
     } else {
-      // If the API is already loaded, create the player immediately
-      createPlayer();
+      // If API is already loaded, initialize the player immediately
+      initializePlayer();
     }
 
-    // Cleanup player when the component is unmounted or videoId changes
-    return cleanupPlayer;
-  }, [videoId]); // This effect will run when videoId changes
+    return () => {
+      delete window.onYouTubeIframeAPIReady; // Clean up
+    };
+  }, []);
 
-  function createPlayer() {
-    // Cleanup the previous player if it exists
-    cleanupPlayer();
+  useEffect(() => {
+    if (playerRef.current?.loadVideoById) {
+      playerRef.current.loadVideoById(videoId);
+    }
+  }, [videoId]);
 
-    // Create a new player with the updated videoId
-    playerRef.current = new window.YT.Player("youtube-iframe", {
-      videoId: videoId,
-      events: {
-        onStateChange: handleStateChange,
-      },
-      playerVars: {
-        autoplay: 1,
-      },
-    });
-  }
-
-  function cleanupPlayer() {
-    if (playerRef.current) {
-      playerRef.current.destroy(); // Destroy the existing player instance
-      playerRef.current = null;
+  function initializePlayer() {
+    if (!playerRef.current) {
+      playerRef.current = new window.YT.Player("youtube-iframe", {
+        videoId: videoId,
+        playerVars: { autoplay: 1 },
+        events: {
+          onReady: (event) => {
+            playerRef.current = event.target; // Store the player instance
+          },
+          onStateChange: handleStateChange,
+        },
+      });
     }
   }
 
