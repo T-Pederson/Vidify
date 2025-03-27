@@ -294,3 +294,18 @@ a {
   text-align: center;
   align-self: center;
 }
+
+.controls {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 2em;
+  row-gap: 1em;
+}
+
+.rightAlign {
+  text-align: end;
+}
+
+.leftAlign {
+  text-align: start;
+}

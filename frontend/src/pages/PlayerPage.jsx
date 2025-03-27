@@ -83,7 +83,11 @@ export default function PlayerPage() {
   }
 
   function selectSong(e) {
-    setCurrentSongId(e.currentTarget.id);
+    const selectedSongId = e.currentTarget.id;
+    if (selectedSongId === currentSongId) {
+      return;
+    }
+    setCurrentSongId(selectedSongId);
     setVideoEnded(true);
     setLoadingVideo(true);
   }
@@ -106,6 +110,39 @@ export default function PlayerPage() {
       ];
     }
     setSongs(playedSongs.concat(remainingSongs));
+  }
+
+  function sortByArtist() {
+    let sortedSongs = [...songs];
+    // First sort by song name
+    sortedSongs.sort((a, b) => a.title.localeCompare(b.title));
+    // Then sort by artist so songs are in alphabetical order by both title and artist
+    sortedSongs.sort((a, b) => a.artist.localeCompare(b.artist));
+    setSongs(sortedSongs);
+  }
+
+  function prevSong() {
+    let currentSongIndex = songs.findIndex((song) => song.id === currentSongId);
+
+    if (currentSongIndex === 0) {
+      return;
+    }
+
+    setCurrentSongId(songs[currentSongIndex - 1].id);
+    setVideoEnded(true);
+    setLoadingVideo(true);
+  }
+
+  function nextSong() {
+    let currentSongIndex = songs.findIndex((song) => song.id === currentSongId);
+
+    if (currentSongIndex === songs.length - 1) {
+      return;
+    }
+
+    setCurrentSongId(songs[currentSongIndex + 1].id);
+    setVideoEnded(true);
+    setLoadingVideo(true);
   }
 
   return (
@@ -133,9 +170,20 @@ export default function PlayerPage() {
           />
         )}
       </div>
-      <p className="underlineClickable" onClick={shuffleRemainingSongs}>
-        Shuffle
-      </p>
+      <div className="controls">
+        <p className="underlineClickable rightAlign" onClick={shuffleRemainingSongs}>
+          Shuffle
+        </p>
+        <p className="underlineClickable leftAlign" onClick={sortByArtist}>
+          Sort By Artist
+        </p>
+        <p className="underlineClickable rightAlign" onClick={prevSong}>
+          Prev
+        </p>
+        <p className="underlineClickable leftAlign" onClick={nextSong}>
+          Next
+        </p>
+      </div>
     </div>
   );
 }
