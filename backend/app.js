@@ -1,10 +1,10 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const userRouter = require("./routes/userRouter");
 const playlistRouter = require("./routes/playlistRouter");
 const musicVideoRouter = require("./routes/musicVideoRouter");
-
-require("dotenv").config();
 
 const app = express();
 

@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 async function getSpotifyToken(req) {
   if (req.app.locals.spotifyToken && !isTokenExpired(req)) {
     return req.app.locals.spotifyToken;
