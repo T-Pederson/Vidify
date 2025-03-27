@@ -17,7 +17,6 @@ export default function PlayerPage() {
   const [loadingVideo, setLoadingVideo] = useState(true);
 
   useEffect(() => {
-    console.log("fetching songs");
     fetch(`${import.meta.env.VITE_BACKEND_URL}/playlists/${playlistId}`, {
       headers: {
         Accept: "application/json",
@@ -43,7 +42,6 @@ export default function PlayerPage() {
 
   useEffect(() => {
     if (videoEnded && songs.length > 0 && currentSongId !== null) {
-      console.log("fetching video");
       const songsDetails = getSongDetails(currentSongId);
 
       if (!songsDetails) return;
