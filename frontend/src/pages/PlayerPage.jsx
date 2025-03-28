@@ -69,6 +69,35 @@ export default function PlayerPage() {
     }
   }, [videoEnded, songs, currentSongId]);
 
+  useEffect(() => {
+    const handleKeyUp = (e) => {
+      if (e.key === "Escape") {
+        const playerContainer = document.getElementById("playerContainer");
+        if (playerContainer?.classList.contains("fullscreen")) {
+          document
+            .getElementById("playerContainer")
+            ?.classList.remove("fullscreen");
+        } else {
+          document
+            .getElementById("playerContainer")
+            ?.classList.add("fullscreen");
+        }
+      }
+      if (e.key === "ArrowLeft") {
+        prevSong();
+      }
+      if (e.key === "ArrowRight") {
+        nextSong();
+      }
+    };
+
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [songs, currentSongId]);
+
   function getSongDetails(id) {
     if (!id) return null;
     const song = songs.find((song) => song.id === id);
@@ -120,7 +149,7 @@ export default function PlayerPage() {
   function prevSong() {
     let currentSongIndex = songs.findIndex((song) => song.id === currentSongId);
 
-    if (currentSongIndex === 0) {
+    if (currentSongIndex <= 0) {
       return;
     }
 
@@ -132,7 +161,7 @@ export default function PlayerPage() {
   function nextSong() {
     let currentSongIndex = songs.findIndex((song) => song.id === currentSongId);
 
-    if (currentSongIndex === songs.length - 1) {
+    if (currentSongIndex >= songs.length - 1) {
       return;
     }
 
@@ -145,12 +174,6 @@ export default function PlayerPage() {
     document.getElementById("playerContainer").classList.add("fullscreen");
   }
 
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      document.getElementById("playerContainer").classList.remove("fullscreen");
-    }
-  });
-
   if (loading) {
     return <p className="loading">Loading...</p>;
   }
@@ -161,7 +184,10 @@ export default function PlayerPage() {
         <img className="cornerLogo" src={logo} alt="Vidify logo" />
         <div className="fullscreenButton" onClick={goFullscreen}>
           <p className="underlineClickable">Fullscreen</p>
-          <p>(Esc to exit fullscreen)</p>
+          <p>
+            (Esc to toggle fullscreen, left and right arrow keys to navigate
+            songs)
+          </p>
         </div>
         <Link to="/playlists">Change playlist</Link>
       </header>
