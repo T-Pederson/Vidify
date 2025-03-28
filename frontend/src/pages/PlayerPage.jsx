@@ -69,10 +69,6 @@ export default function PlayerPage() {
     }
   }, [videoEnded, songs, currentSongId]);
 
-  if (loading) {
-    return <p className="loading">Loading...</p>;
-  }
-
   function getSongDetails(id) {
     if (!id) return null;
     const song = songs.find((song) => song.id === id);
@@ -145,10 +141,28 @@ export default function PlayerPage() {
     setLoadingVideo(true);
   }
 
+  function goFullscreen() {
+    document.getElementById("playerContainer").classList.add("fullscreen");
+  }
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.getElementById("playerContainer").classList.remove("fullscreen");
+    }
+  });
+
+  if (loading) {
+    return <p className="loading">Loading...</p>;
+  }
+
   return (
     <div className="playerPage">
       <header>
         <img className="cornerLogo" src={logo} alt="Vidify logo" />
+        <div className="fullscreenButton" onClick={goFullscreen}>
+          <p className="underlineClickable">Fullscreen</p>
+          <p>(Esc to exit fullscreen)</p>
+        </div>
         <Link to="/playlists">Change playlist</Link>
       </header>
       <div className="songListPlayerContainer">
@@ -157,21 +171,26 @@ export default function PlayerPage() {
           selectSong={selectSong}
           currentSongId={currentSongId}
         />
-        {loadingVideo ? (
-          <p className="loadingVideo">Loading Video...</p>
-        ) : (
-          <YouTubeVideo
-            videoId={videoId}
-            setVideoEnded={setVideoEnded}
-            songs={songs}
-            currentSongId={currentSongId}
-            setCurrentSongId={setCurrentSongId}
-            setLoadingVideo={setLoadingVideo}
-          />
-        )}
+        <div id="playerContainer">
+          {loadingVideo ? (
+            <p className="loadingVideo">Loading Video...</p>
+          ) : (
+            <YouTubeVideo
+              videoId={videoId}
+              setVideoEnded={setVideoEnded}
+              songs={songs}
+              currentSongId={currentSongId}
+              setCurrentSongId={setCurrentSongId}
+              setLoadingVideo={setLoadingVideo}
+            />
+          )}
+        </div>
       </div>
       <div className="controls">
-        <p className="underlineClickable rightAlign" onClick={shuffleRemainingSongs}>
+        <p
+          className="underlineClickable rightAlign"
+          onClick={shuffleRemainingSongs}
+        >
           Shuffle
         </p>
         <p className="underlineClickable leftAlign" onClick={sortByArtist}>

@@ -44,7 +44,10 @@ export default function YouTubeVideo({
     if (!playerRef.current) {
       playerRef.current = new window.YT.Player("youtube-iframe", {
         videoId: videoId,
-        playerVars: { autoplay: 1 },
+        playerVars: {
+          fs: 0,
+          autoplay: 1,
+        },
         events: {
           onReady: (event) => {
             playerRef.current = event.target; // Store the player instance

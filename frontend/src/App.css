@@ -62,6 +62,13 @@ table {
 }
 
 /* Elements */
+a {
+  font-size: 1.2em;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--vidify-gray);
+}
+
 body {
   background-color: var(--vidify-black);
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
@@ -85,14 +92,45 @@ iframe {
   width: 1120px;
 }
 
-a {
-  font-size: 1.2em;
-  text-decoration: underline;
-  cursor: pointer;
-  color: var(--vidify-gray);
+/* Classes */
+.controls {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 2em;
+  row-gap: 1em;
 }
 
-/* Classes */
+.cornerLogo {
+  height: 7em;
+}
+
+.errorPage {
+  text-align: center;
+  margin-top: 10em;
+}
+
+.fullscreen {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--vidify-black);
+}
+
+.fullscreen #youtube-iframe {
+  width: 100vw;
+  height: 100vh;
+}
+
+.fullscreenButton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  cursor: pointer;
+}
+
 .landingPage {
   display: flex;
   flex-direction: column;
@@ -100,33 +138,6 @@ a {
   margin-top: 3em;
   text-align: center;
   gap: 4em;
-}
-
-.landingPage h1 {
-  max-width: 13em;
-  line-height: 1.1em;
-}
-
-.landingPage form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4em;
-}
-
-.landingPage input {
-  background-color: var(--vidify-gray);
-  border: none;
-  border-radius: 4px;
-  padding: 0.4em;
-  width: 20em;
-  font-size: 1.2em;
-  font-weight: bold;
-  color: var(--vidify-black)
-}
-
-.landingPage input:focus {
-  outline: none;
 }
 
 .landingPage button {
@@ -147,9 +158,61 @@ a {
   transform: scale(0.95);
 }
 
-.errorPage {
+.landingPage form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4em;
+}
+
+.landingPage h1 {
+  max-width: 13em;
+  line-height: 1.1em;
+}
+
+.landingPage input {
+  background-color: var(--vidify-gray);
+  border: none;
+  border-radius: 4px;
+  padding: 0.4em;
+  width: 20em;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--vidify-black)
+}
+
+.landingPage input:focus {
+  outline: none;
+}
+
+.leftAlign {
+  text-align: start;
+}
+
+.loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.loadingVideo {
+  width: 1120px;
   text-align: center;
-  margin-top: 10em;
+  align-self: center;
+  justify-self: center;
+}
+
+.playerPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playlistsContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 3em 8em;
+  align-items: center;
 }
 
 .playlistsPage {
@@ -158,13 +221,6 @@ a {
   gap: 4em;
   text-align: center;
   margin-bottom: 4em;
-  align-items: center;
-}
-
-.playlistsContainer {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  gap: 3em 8em;
   align-items: center;
 }
 
@@ -184,20 +240,16 @@ a {
   border-radius: 4px;
 }
 
-.cornerLogo {
-  height: 7em;
+.rightAlign {
+  text-align: end;
 }
 
-.underlineClickable {
-  font-size: 1.2em;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.playerPage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.songArtist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 14em;
+  margin-top: 0.2em;
 }
 
 .songListPlayerContainer {
@@ -207,6 +259,20 @@ a {
   margin-top: 2em;
   margin-bottom: 1em;
   margin-left: 10em;
+}
+
+.songSelected {
+  background-color: rgba(167, 162, 169, 0.2);
+}
+
+.songTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 18.5em;
+  color: var(--vidify-green);
+  font-size: 1.1em;
+  line-height: 1.2em;
 }
 
 .songsList {
@@ -261,51 +327,17 @@ a {
   background-color: rgba(167, 162, 169, 0.2);
 }
 
-.songSelected {
-  background-color: rgba(167, 162, 169, 0.2);
-}
-
-.songTitle {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 18.5em;
-  color: var(--vidify-green);
-  font-size: 1.1em;
-  line-height: 1.2em;
-}
-
-.songArtist {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 14em;
-  margin-top: 0.2em;
-}
-
-.loading {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-}
-
-.loadingVideo {
-  width: 1120px;
+.underlineClickable {
+  font-size: 1.2em;
+  text-decoration: underline;
+  cursor: pointer;
   text-align: center;
-  align-self: center;
 }
 
-.controls {
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 2em;
-  row-gap: 1em;
-}
-
-.rightAlign {
-  text-align: end;
-}
-
-.leftAlign {
-  text-align: start;
+/* IDs */
+#playerContainer {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
