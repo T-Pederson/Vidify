@@ -8,7 +8,7 @@ export default function YouTubeVideo({
   setCurrentSongId,
   setLoadingVideo,
 }) {
-  const playerRef = useRef(null); // Ref to hold the iframe element
+  const playerRef = useRef(null);
   const songsRef = useRef(songs);
 
   useEffect(() => {
@@ -16,21 +16,17 @@ export default function YouTubeVideo({
   }, [songs]);
 
   useEffect(() => {
-    // Ensure the YouTube Iframe API is loaded only once
     if (!window.YT) {
       const script = document.createElement("script");
       script.src = "https://www.youtube.com/iframe_api";
       document.body.appendChild(script);
-
-      // Define the function globally for YouTube API callback
       window.onYouTubeIframeAPIReady = initializePlayer;
     } else {
-      // If API is already loaded, initialize the player immediately
       initializePlayer();
     }
 
     return () => {
-      delete window.onYouTubeIframeAPIReady; // Clean up
+      delete window.onYouTubeIframeAPIReady;
     };
   }, []);
 
@@ -50,7 +46,7 @@ export default function YouTubeVideo({
         },
         events: {
           onReady: (event) => {
-            playerRef.current = event.target; // Store the player instance
+            playerRef.current = event.target;
           },
           onStateChange: handleStateChange,
         },
@@ -59,8 +55,8 @@ export default function YouTubeVideo({
   }
 
   function handleStateChange(event) {
+    window.focus();
     if (event.data === window.YT.PlayerState.ENDED) {
-      // Video has ended
       const currentSongsList = songsRef.current;
       const nextSongIndex =
         currentSongsList.findIndex((song) => song.id === currentSongId) + 1;
@@ -76,7 +72,7 @@ export default function YouTubeVideo({
 
   return (
     <div>
-      <div id="youtube-iframe"></div> {/* The container for the iframe */}
+      <div id="youtube-iframe"></div>
     </div>
   );
 }
