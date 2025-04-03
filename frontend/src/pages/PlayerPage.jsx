@@ -246,16 +246,17 @@ export default function PlayerPage() {
             />
           )}
         </div>
-        <div className="altVideoContainer">
+        <form className="altVideoContainer" onSubmit={submitAltVideoId}>
           <label htmlFor="altVideoId">Alternate Video Id: </label>
           <input
             type="text"
             id="altVideoId"
             name="altVideoId"
             placeholder="T3yPyc5ZdNs"
+            autoComplete="off"
           />
-          <button onClick={submitAltVideoId}>Submit</button>
-        </div>
+          <button className="submit" type="submit">Submit</button>
+        </form>
         <div className="controls">
           <p
             className="underlineClickable rightAlign"

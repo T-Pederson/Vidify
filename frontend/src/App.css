@@ -101,6 +101,46 @@ iframe {
 }
 
 /* Classes */
+.altVideoContainer {
+  display: flex;
+  gap: 0.75em;
+  height: fit-content;
+  align-items: center;
+}
+
+.altVideoContainer input {
+  background-color: var(--vidify-gray);
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em;
+  color: var(--vidify-black)
+}
+
+.altVideoContainer input:focus {
+  outline: none;
+}
+
+.altVideoContainer input::placeholder {
+  color: var(--vidify-dark-gray);
+}
+
+.altVideoContainer button {
+  background-color: var(--vidify-green);
+  color: var(--vidify-dark-green);
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em 1em;
+}
+
+.altVideoContainer button:hover {
+  opacity: 80%;
+}
+
+.altVideoContainer button:active {
+  transform: scale(0.95);
+}
+
 .controls {
   display: grid;
   grid-template-columns: auto auto;
@@ -192,8 +232,6 @@ iframe {
 .landingPage input:focus {
   outline: none;
 }
-
-
 
 .loading {
   position: absolute;
@@ -328,6 +366,10 @@ iframe {
 
 .songsListSong:hover {
   background-color: rgba(167, 162, 169, 0.2);
+}
+
+.submit {
+  cursor: pointer;
 }
 
 .underlineClickable {
