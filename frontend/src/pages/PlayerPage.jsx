@@ -176,7 +176,8 @@ export default function PlayerPage() {
     document.getElementById("playerContainer").classList.add("fullscreen");
   }
 
-  function submitAltVideoId() {
+  function submitAltVideoId(e) {
+    e.preventDefault();
     const altVideoIdInput = document.getElementById("altVideoId");
     const curSong = songs.find((song) => song.id == currentSongId);
     fetch(`${import.meta.env.VITE_BACKEND_URL}/music-video/alt-video-id`, {
