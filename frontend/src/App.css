@@ -255,12 +255,13 @@ iframe {
 }
 
 .songListPlayerContainer {
-  display: flex;
-  align-self: flex-start;
-  gap: 2em;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: center;
+  column-gap: 2em;
+  row-gap: 1em;
   margin-top: 2em;
   margin-bottom: 1em;
-  margin-left: 10em;
 }
 
 .songSelected {

@@ -174,6 +174,31 @@ export default function PlayerPage() {
     document.getElementById("playerContainer").classList.add("fullscreen");
   }
 
+  function submitAltVideoId() {
+    const altVideoIdInput = document.getElementById("altVideoId");
+    const curSong = songs.find((song) => song.id == currentSongId);
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/music-video/alt-video-id`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        artist: curSong.artist,
+        title: curSong.title,
+        altVideoId: altVideoIdInput.value,
+      }),
+    })
+      .then((response) => {
+        if (response.status !== 204) {
+          console.log("Failed to update YouTube Video Id");
+        } else {
+          altVideoIdInput.value = "";
+          setVideoEnded(true);
+          setLoadingVideo(true);
+        }
+      });
+  }
+
   if (loading) {
     return <p className="loading">Loading...</p>;
   }
@@ -211,23 +236,33 @@ export default function PlayerPage() {
             />
           )}
         </div>
-      </div>
-      <div className="controls">
-        <p
-          className="underlineClickable rightAlign"
-          onClick={shuffleRemainingSongs}
-        >
-          Shuffle
-        </p>
-        <p className="underlineClickable leftAlign" onClick={sortByArtist}>
-          Sort By Artist
-        </p>
-        <p className="underlineClickable rightAlign" onClick={prevSong}>
-          Prev
-        </p>
-        <p className="underlineClickable leftAlign" onClick={nextSong}>
-          Next
-        </p>
+        <div className="altVideoContainer">
+          <label htmlFor="altVideoId">Alternate Video Id: </label>
+          <input
+            type="text"
+            id="altVideoId"
+            name="altVideoId"
+            placeholder="T3yPyc5ZdNs"
+          />
+          <button onClick={submitAltVideoId}>Submit</button>
+        </div>
+        <div className="controls">
+          <p
+            className="underlineClickable rightAlign"
+            onClick={shuffleRemainingSongs}
+          >
+            Shuffle
+          </p>
+          <p className="underlineClickable leftAlign" onClick={sortByArtist}>
+            Sort By Artist
+          </p>
+          <p className="underlineClickable rightAlign" onClick={prevSong}>
+            Prev
+          </p>
+          <p className="underlineClickable leftAlign" onClick={nextSong}>
+            Next
+          </p>
+        </div>
       </div>
     </div>
   );
