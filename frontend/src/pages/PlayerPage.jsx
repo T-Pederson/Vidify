@@ -46,17 +46,19 @@ export default function PlayerPage() {
 
       if (!songsDetails) return;
 
-      fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/music-video?artist=${
-          songsDetails.artist
-        }&title=${songsDetails.title}`,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      const queryParams = `artist=${encodeURIComponent(
+        songsDetails.artist
+      )}&title=${encodeURIComponent(songsDetails.title)}`;
+      const url = `${
+        import.meta.env.VITE_BACKEND_URL
+      }/music-video?${queryParams}`;
+
+      fetch(url, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
         .then((res) => res.json())
         .then((res) => {
           setVideoId(res.videoId);
@@ -188,14 +190,22 @@ export default function PlayerPage() {
         altVideoId: altVideoIdInput.value,
       }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (response.status !== 204) {
-          console.log("Failed to update YouTube Video Id");
+          try {
+            const errorData = await response.json();
+            console.log("Error:", errorData.error || "Unknown error");
+          } catch (err) {
+            console.log("Failed to parse error response:", err);
+          }
         } else {
           altVideoIdInput.value = "";
           setVideoEnded(true);
           setLoadingVideo(true);
         }
+      })
+      .catch((error) => {
+        console.log("Network or fetch error:", error);
       });
   }
 
