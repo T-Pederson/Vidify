@@ -22,7 +22,11 @@ async function getMusicVideo(req, res, next) {
 
     const url = `https://www.youtube.com/results?search_query=${searchQuery}`;
 
-    const browser = await puppeteer.launch({ headless: "new" });
+    const browser = await puppeteer.launch({
+      executablePath: puppeteer.executablePath(),
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
 
@@ -60,7 +64,11 @@ async function alternateVideoId(req, res, next) {
   // Determine if video Id is a valid Id
   const url = `https://www.youtube.com/watch?v=${altVideoId}`;
 
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({
+    executablePath: puppeteer.executablePath(),
+    headless: "new",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2" });
 
@@ -87,11 +95,9 @@ async function alternateVideoId(req, res, next) {
   );
 
   if (result.matchedCount === 0) {
-    res
-      .status(404)
-      .json({
-        error: `Song with Title: ${title} and Artist: ${artist} not found in database`,
-      });
+    res.status(404).json({
+      error: `Song with Title: ${title} and Artist: ${artist} not found in database`,
+    });
     return;
   }
 
