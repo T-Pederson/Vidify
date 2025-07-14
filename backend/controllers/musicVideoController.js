@@ -32,6 +32,8 @@ async function getMusicVideo(req, res, next) {
         "--disable-gpu",
         "--disable-extensions",
         "--disable-plugins",
+        "--no-zygote",
+        "--single-process",
       ],
     });
     const page = await browser.newPage();
@@ -81,6 +83,8 @@ async function alternateVideoId(req, res, next) {
       "--disable-gpu",
       "--disable-extensions",
       "--disable-plugins",
+      "--no-zygote",
+      "--single-process",
     ],
   });
   const page = await browser.newPage();
