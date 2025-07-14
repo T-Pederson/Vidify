@@ -25,7 +25,14 @@ async function getMusicVideo(req, res, next) {
     const browser = await puppeteer.launch({
       executablePath: puppeteer.executablePath(),
       headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--disable-extensions",
+        "--disable-plugins",
+      ],
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
@@ -67,7 +74,14 @@ async function alternateVideoId(req, res, next) {
   const browser = await puppeteer.launch({
     executablePath: puppeteer.executablePath(),
     headless: "new",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+      "--disable-extensions",
+      "--disable-plugins",
+    ],
   });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2" });
