@@ -189,6 +189,16 @@ iframe {
 }
 
 .landingPage button {
+  background-color: var(--vidify-gray);
+  color: var(--vidify-black);
+  font-size: .8em;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em .75em;
+}
+
+.landingPage form button {
   background-color: var(--vidify-green);
   color: var(--vidify-dark-green);
   font-size: 2em;

@@ -25,6 +25,11 @@ export default function LandingPage() {
     navigate("/playlists");
   }
 
+  function selectDefaultAccount() {
+    localStorage.setItem("currentUser", "1236555394");
+    navigate("/playlists");
+  }
+
   if (loading) {
     return null;
   }
@@ -37,6 +42,7 @@ export default function LandingPage() {
         <input type="text" name="username" autoFocus />
         <button type="submit">Submit</button>
       </form>
+      <button className="defaultAccBtn" onClick={selectDefaultAccount}>Default Account</button>
     </div>
   );
 }
