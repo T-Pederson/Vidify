@@ -220,7 +220,7 @@ export default function PlayerPage() {
         <img className="cornerLogo" src={logo} alt="Vidify logo" />
         <div className="fullscreenButton" onClick={goFullscreen}>
           <p className="underlineClickable">Fullscreen</p>
-          <p>
+          <p className="fullscreenText">
             (Esc to toggle fullscreen, left and right arrow keys to navigate
             songs)
           </p>
@@ -228,52 +228,58 @@ export default function PlayerPage() {
         <Link to="/playlists">Change playlist</Link>
       </header>
       <div className="songListPlayerContainer">
-        <SongsList
-          songs={songs}
-          selectSong={selectSong}
-          currentSongId={currentSongId}
-        />
-        <div id="playerContainer">
-          {loadingVideo ? (
-            <p className="loadingVideo">Loading Video...</p>
-          ) : (
-            <YouTubeVideo
-              videoId={videoId}
-              setVideoEnded={setVideoEnded}
-              songs={songs}
-              currentSongId={currentSongId}
-              setCurrentSongId={setCurrentSongId}
-              setLoadingVideo={setLoadingVideo}
-            />
-          )}
-        </div>
-        <form className="altVideoContainer" onSubmit={submitAltVideoId}>
-          <label htmlFor="altVideoId">Alternate Video Id: </label>
-          <input
-            type="text"
-            id="altVideoId"
-            name="altVideoId"
-            placeholder="T3yPyc5ZdNs"
-            autoComplete="off"
+        <div className="songsListSection">
+          <SongsList
+            songs={songs}
+            selectSong={selectSong}
+            currentSongId={currentSongId}
           />
-          <button className="submit" type="submit">Submit</button>
-        </form>
-        <div className="controls">
-          <p
-            className="underlineClickable rightAlign"
-            onClick={shuffleRemainingSongs}
-          >
-            Shuffle
-          </p>
-          <p className="underlineClickable leftAlign" onClick={sortByArtist}>
-            Sort By Artist
-          </p>
-          <p className="underlineClickable rightAlign" onClick={prevSong}>
-            Prev
-          </p>
-          <p className="underlineClickable leftAlign" onClick={nextSong}>
-            Next
-          </p>
+          <form className="altVideoContainer" onSubmit={submitAltVideoId}>
+            <label htmlFor="altVideoId">Alternate Video Id: </label>
+            <input
+              type="text"
+              id="altVideoId"
+              name="altVideoId"
+              placeholder="T3yPyc5ZdNs"
+              autoComplete="off"
+            />
+            <button className="submit" type="submit">
+              Submit
+            </button>
+          </form>
+        </div>
+        <div className="videoControlsSection">
+          <div id="playerContainer">
+            {loadingVideo ? (
+              <p className="loadingVideo">Loading Video...</p>
+            ) : (
+              <YouTubeVideo
+                videoId={videoId}
+                setVideoEnded={setVideoEnded}
+                songs={songs}
+                currentSongId={currentSongId}
+                setCurrentSongId={setCurrentSongId}
+                setLoadingVideo={setLoadingVideo}
+              />
+            )}
+          </div>
+          <div className="controls">
+            <p
+              className="underlineClickable rightAlign"
+              onClick={shuffleRemainingSongs}
+            >
+              Shuffle
+            </p>
+            <p className="underlineClickable leftAlign" onClick={sortByArtist}>
+              Sort By Artist
+            </p>
+            <p className="underlineClickable rightAlign" onClick={prevSong}>
+              Prev
+            </p>
+            <p className="underlineClickable leftAlign" onClick={nextSong}>
+              Next
+            </p>
+          </div>
         </div>
       </div>
     </div>

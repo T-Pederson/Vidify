@@ -41,8 +41,11 @@ export default function YouTubeVideo({
       playerRef.current = new window.YT.Player("youtube-iframe", {
         videoId: videoId,
         playerVars: {
-          fs: 0,
+          fs: 1,
           autoplay: 1,
+          rel: 0,
+          modestbranding: 1,
+          iv_load_policy: 3,
         },
         events: {
           onReady: (event) => {
@@ -71,7 +74,7 @@ export default function YouTubeVideo({
   }
 
   return (
-    <div>
+    <div style={{ width: "100%", maxWidth: "1120px" }}>
       <div id="youtube-iframe"></div>
     </div>
   );
